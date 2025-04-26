@@ -31,13 +31,27 @@ class FleetBookingResource extends Resource
                     ->numeric(),
                 Forms\Components\TextInput::make('vehicle_type_id')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->rule(function () {
+                        return function (string $attribute, $value, \Closure $fail) {
+                            $isBooked = \App\Models\FleetBooking::where('vehicle_type_id', $value)
+                                ->where('status', '!=', 'selesai')
+                                ->exists();
+
+                            if ($isBooked) {
+                                $fail("Armada sedang digunakan.");
+                            }
+                        };
+                    }),
                 Forms\Components\DatePicker::make('booking_date')
-                    ->required(),
+                    ->required()
+                    ->rule('after_or_equal:today'),
                 Forms\Components\DateTimePicker::make('start_date')
-                    ->required(),
+                    ->required()
+                    ->rule('after_or_equal:today'),
                 Forms\Components\DateTimePicker::make('end_date')
-                    ->required(),
+                    ->required()
+                    ->rule('after:start_date'),
                 Forms\Components\TextInput::make('origin_location_id')
                     ->required()
                     ->numeric(),
@@ -53,6 +67,7 @@ class FleetBookingResource extends Resource
                 Forms\Components\TextInput::make('status')
                     ->required(),
                 Forms\Components\Textarea::make('notes')
+                    ->nullable()
                     ->columnSpanFull(),
             ]);
     }
