@@ -23,9 +23,14 @@ class CustomerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
+                Forms\Components\Select::make('user_id')
+                    ->label('User')
+                    ->relationship('user', 'name') // relasi ke model User dan field 'name'
                     ->required()
-                    ->numeric(),
+                    ->searchable()
+                    ->preload() // ← tampilkan semua pilihan langsung
+                    ->getOptionLabelFromRecordUsing(fn($record) => "{$record->name} ({$record->email})"),
+
                 Forms\Components\TextInput::make('company_name')
                     ->maxLength(100),
                 Forms\Components\TextInput::make('contact_person')
@@ -37,12 +42,14 @@ class CustomerResource extends Resource
             ]);
     }
 
+
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('User')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('company_name')
                     ->searchable(),

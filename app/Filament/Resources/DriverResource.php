@@ -23,17 +23,25 @@ class DriverResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('user_id')
+                    ->label('User')
+                    ->relationship('user', 'name')
+                    ->searchable()
+                    ->preload() // ← ini yang bikin semua option langsung muncul
+                    ->required(),
+
+
                 Forms\Components\TextInput::make('license_number')
                     ->required()
                     ->maxLength(50),
+
                 Forms\Components\TextInput::make('license_type')
                     ->required()
                     ->maxLength(20),
+
                 Forms\Components\DatePicker::make('license_expiry')
                     ->required(),
+
                 Forms\Components\TextInput::make('status')
                     ->required(),
             ]);
@@ -43,9 +51,10 @@ class DriverResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('User') // label kolom
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('license_number')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('license_type')
