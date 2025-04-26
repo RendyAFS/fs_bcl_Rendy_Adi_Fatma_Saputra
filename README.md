@@ -4,11 +4,9 @@ BCL-Tracking adalah aplikasi pelacakan pengiriman dan manajemen armada berbasis 
 
 ## Prasyarat
 
-Sebelum memulai, pastikan bahwa kamu memiliki hal-hal berikut:
-
 - PHP 8.1 atau lebih tinggi
 - Composer
-- MySQL (versi 5.7 atau lebih tinggi)
+- MySQL 
 
 ## Diagram Struktur Database
 
