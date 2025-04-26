@@ -25,7 +25,7 @@ Ikuti langkah-langkah di bawah ini untuk menginstal dan menjalankan aplikasi ini
 
 Clone repository ini ke dalam direktori lokal kamu menggunakan git.
 
-```bash
+bash
 git clone https://github.com/RendyAFS/fs_bcl_Rendy_Adi_Fatma_Saputra.git
 
 
@@ -41,10 +41,18 @@ cp .env.example .env
 php artisan key:generate
 
 
-# Jalankan migrasi untuk membuat tabel-tabel di database
+## Jalankan migrasi untuk membuat tabel-tabel di database
 php artisan migrate
 
-# Jalankan seeder untuk memasukkan data pengguna (admin, staff, dll)
+## Jalankan seeder untuk memasukkan data pengguna (admin, staff, dll)
 php artisan db:seed
 
+## Jalankan Webnya
 php artisan serve
+
+
+##  Login
+Untuk masuk ke panel admin, gunakan kredensial berikut:
+
+Email: admin@bcl-tracker.com
+Password: password
